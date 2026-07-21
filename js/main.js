@@ -8,19 +8,23 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── Intro : le burger s'assemble puis traverse l'écran ── */
+  /* ── Intro : le burger arrive du monde réel, couche par couche ── */
   const preloader = document.getElementById("preloader");
+  let introTimer = null;
   const endIntro = () => {
+    if (preloader.classList.contains("is-done")) return;
+    clearTimeout(introTimer);
     preloader.classList.add("is-done");
     document.body.classList.add("intro-done");
   };
   window.addEventListener("load", () => {
     if (reduceMotion) { endIntro(); return; }
     preloader.classList.add("is-play");
-    setTimeout(endIntro, 1450);
+    introTimer = setTimeout(endIntro, 5150);
   });
+  document.getElementById("introSkip").addEventListener("click", endIntro);
   // Sécurité : ne jamais rester bloqué sur l'intro
-  setTimeout(endIntro, 4500);
+  setTimeout(endIntro, 9000);
 
   /* ── Split du titre héro en caractères ── */
   document.querySelectorAll("[data-split]").forEach((el) => {
@@ -188,6 +192,103 @@
       });
       card.addEventListener("mouseleave", () => { card.style.transform = ""; });
     });
+  }
+
+  /* ── Atelier : compose ton burger ── */
+  const builderSvg = document.getElementById("builderSvg");
+  if (builderSvg) {
+    const NS = "http://www.w3.org/2000/svg";
+    const XLINK = "http://www.w3.org/1999/xlink";
+    const BASE_PRICE = 6.5; // pain artisanal + garniture de base
+    const INGS = {
+      steak:  { sym: "#p-steak",  h: 16, price: 2.5, label: "Steak smashé" },
+      cheese: { sym: "#p-cheese", h: 9,  price: 1.0, label: "Cheddar affiné" },
+      salad:  { sym: "#p-salad",  h: 13, price: 0.6, label: "Salade croquante" },
+      tomato: { sym: "#p-tomato", h: 9,  price: 0.6, label: "Tomate fraîche" },
+      onions: { sym: "#p-onions", h: 10, price: 0.8, label: "Oignons caramélisés" },
+      sauce:  { sym: "#p-sauce",  h: 8,  price: 0.5, label: "Sauce signature" },
+    };
+    const MAX_LAYERS = 12;
+    let stack = ["salad", "cheese", "steak"]; // burger de départ appétissant
+    const priceEl = document.getElementById("buildPrice");
+    const countEl = document.getElementById("buildCount");
+    const msgEl = document.getElementById("buildMsg");
+    const euros = (n) => n.toFixed(2).replace(".", ",") + " €";
+
+    const makeUse = (sym, y) => {
+      const use = document.createElementNS(NS, "use");
+      use.setAttribute("href", sym);
+      use.setAttributeNS(XLINK, "xlink:href", sym);
+      use.setAttribute("y", y);
+      return use;
+    };
+
+    const render = (newIndex = -1) => {
+      builderSvg.innerHTML = "";
+      const stackH = stack.reduce((s, k) => s + INGS[k].h, 0);
+      const total = 74 + stackH;
+      builderSvg.setAttribute("viewBox", `0 0 200 ${total}`);
+
+      // Pain du haut (dessiné en premier : les couches passent devant)
+      const top = document.createElementNS(NS, "g");
+      top.setAttribute("class", "builder-layer builder-layer--fixed");
+      top.appendChild(makeUse("#p-bun-top", 0));
+      builderSvg.appendChild(top);
+
+      // Ingrédients, du haut de la pile vers le bas
+      let y = 52;
+      for (let i = stack.length - 1; i >= 0; i--) {
+        const key = stack[i];
+        const g = document.createElementNS(NS, "g");
+        g.setAttribute("class", "builder-layer" + (i === newIndex ? " is-new" : ""));
+        g.appendChild(makeUse(INGS[key].sym, y));
+        const idx = i;
+        const title = document.createElementNS(NS, "title");
+        title.textContent = INGS[key].label + " — cliquer pour retirer";
+        g.appendChild(title);
+        g.addEventListener("click", () => {
+          stack.splice(idx, 1);
+          msgEl.textContent = INGS[key].label + " retiré.";
+          render();
+        });
+        builderSvg.appendChild(g);
+        y += INGS[key].h;
+      }
+
+      // Pain du bas
+      const bot = document.createElementNS(NS, "g");
+      bot.setAttribute("class", "builder-layer builder-layer--fixed");
+      bot.appendChild(makeUse("#p-bun-bot", 50 + stackH));
+      builderSvg.appendChild(bot);
+
+      // Prix + compteur
+      const price = BASE_PRICE + stack.reduce((s, k) => s + INGS[k].price, 0);
+      priceEl.textContent = euros(price);
+      priceEl.classList.remove("pop");
+      void priceEl.offsetWidth;
+      priceEl.classList.add("pop");
+      countEl.textContent = stack.length
+        ? `(${stack.length} ingrédient${stack.length > 1 ? "s" : ""})`
+        : "(pain nature… osé)";
+    };
+
+    document.querySelectorAll(".ing").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (stack.length >= MAX_LAYERS) {
+          msgEl.textContent = "Même le Triple Z n'ose pas monter aussi haut 😅";
+          return;
+        }
+        msgEl.textContent = "";
+        stack.push(btn.dataset.ing);
+        render(stack.length - 1);
+      });
+    });
+    document.getElementById("buildReset").addEventListener("click", () => {
+      stack = [];
+      msgEl.textContent = "On repart de zéro, chef !";
+      render();
+    });
+    render();
   }
 
   /* ── Avis : drag horizontal ── */

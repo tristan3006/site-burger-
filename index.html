@@ -19,15 +19,27 @@
   <!-- ══════════ PRELOADER ══════════ -->
   <div class="preloader" id="preloader">
     <div class="preloader__stage">
-      <div class="preloader__lines" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="preloader__burger">
-        <span class="pl-layer pl-bun-top"></span>
-        <span class="pl-layer pl-cheese"></span>
-        <span class="pl-layer pl-steak"></span>
-        <span class="pl-layer pl-bun-bot"></span>
+      <svg class="intro-svg" viewBox="0 0 200 132" aria-hidden="true">
+        <g class="i-layer i-top"><use href="#p-bun-top" y="14"/></g>
+        <g class="i-layer i-salad"><use href="#p-salad" y="64"/></g>
+        <g class="i-layer i-tomato"><use href="#p-tomato" y="76"/></g>
+        <g class="i-layer i-cheese"><use href="#p-cheese" y="84"/></g>
+        <g class="i-layer i-steak"><use href="#p-steak" y="92"/></g>
+        <g class="i-layer i-bot"><use href="#p-bun-bot" y="110"/></g>
+      </svg>
+      <div class="intro-ring" aria-hidden="true"></div>
+      <div class="intro-crumbs" aria-hidden="true">
+        <span style="--dx:-90px;--dy:-60px"></span>
+        <span style="--dx:80px;--dy:-75px"></span>
+        <span style="--dx:-120px;--dy:10px"></span>
+        <span style="--dx:115px;--dy:20px"></span>
+        <span style="--dx:-55px;--dy:70px"></span>
+        <span style="--dx:60px;--dy:65px"></span>
       </div>
     </div>
-    <p class="preloader__text">Family'zz</p>
+    <p class="intro-title">FAMILY'ZZ</p>
+    <p class="intro-sub">Le goût qui rassemble</p>
+    <button class="intro-skip" id="introSkip" type="button">Passer l'intro →</button>
   </div>
 
   <!-- ══════════ CURSEUR CUSTOM ══════════ -->
@@ -40,6 +52,7 @@
     <nav class="nav__links">
       <a href="#histoire" class="nav__link" data-magnetic>L'histoire</a>
       <a href="#menu" class="nav__link" data-magnetic>La carte</a>
+      <a href="#atelier" class="nav__link" data-magnetic>L'atelier</a>
       <a href="#avis" class="nav__link" data-magnetic>Les avis</a>
       <a href="#infos" class="nav__link" data-magnetic>Nous trouver</a>
     </nav>
@@ -53,6 +66,7 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#histoire" class="mobile-menu__link">L'histoire</a>
     <a href="#menu" class="mobile-menu__link">La carte</a>
+    <a href="#atelier" class="mobile-menu__link">L'atelier</a>
     <a href="#avis" class="mobile-menu__link">Les avis</a>
     <a href="#infos" class="mobile-menu__link">Nous trouver</a>
     <a href="#infos" class="mobile-menu__cta">Commander</a>
@@ -77,6 +91,7 @@
 
       <!-- Burger SVG interactif, chaque couche flotte en parallaxe -->
       <div class="hero__burger" id="heroBurger" aria-hidden="true">
+        <div class="steam"><i></i><i></i><i></i></div>
         <svg viewBox="0 0 400 340" class="burger-svg">
           <!-- Pain du bas -->
           <g class="b-layer" data-depth="8">
@@ -249,6 +264,14 @@
         </g>
         <g id="p-bun-bot">
           <path d="M32 0 L168 0 Q176 0 176 8 Q176 18 100 18 Q24 18 24 8 Q24 0 32 0 Z" fill="#E8A33D"/>
+        </g>
+        <g id="p-onions">
+          <circle cx="68" cy="7" r="7" fill="none" stroke="#D98E4C" stroke-width="4"/>
+          <circle cx="102" cy="6" r="6" fill="none" stroke="#E8A968" stroke-width="4"/>
+          <circle cx="134" cy="8" r="7" fill="none" stroke="#D98E4C" stroke-width="4"/>
+        </g>
+        <g id="p-sauce">
+          <path d="M30 0 L170 0 L170 5 Q160 5 158 13 Q156 20 148 13 Q142 6 135 10 Q127 14 123 7 L30 7 Z" fill="#E8542F"/>
         </g>
         <g id="burger-classic">
           <use href="#p-bun-top" y="14"/>
@@ -502,6 +525,40 @@
             <div class="dish__foot"><span class="dish__price">5,50&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
+      </div>
+    </section>
+
+    <!-- ══════════ ATELIER : COMPOSE TON BURGER ══════════ -->
+    <section class="atelier" id="atelier">
+      <div class="atelier__head">
+        <p class="atelier__kicker reveal">L'atelier</p>
+        <h2 class="atelier__title reveal">Compose <em>ton</em> burger</h2>
+        <p class="atelier__sub reveal">Empile tes ingrédients, regarde le prix se calculer, recommence autant que tu veux — puis viens nous le commander au comptoir.</p>
+      </div>
+
+      <div class="atelier__grid">
+        <div class="atelier__stage reveal">
+          <svg id="builderSvg" class="atelier__svg" viewBox="0 0 200 132" aria-label="Ton burger personnalisé"></svg>
+          <p class="atelier__hint">Astuce : clique sur une couche du burger pour la retirer.</p>
+        </div>
+
+        <div class="atelier__panel reveal">
+          <div class="atelier__ings" id="builderIngs">
+            <button class="ing" type="button" data-ing="steak"><span class="ing__dot" style="--c:#6B3A22"></span>Steak smashé<b>+2,50&nbsp;€</b></button>
+            <button class="ing" type="button" data-ing="cheese"><span class="ing__dot" style="--c:#FFB92E"></span>Cheddar affiné<b>+1,00&nbsp;€</b></button>
+            <button class="ing" type="button" data-ing="salad"><span class="ing__dot" style="--c:#79C556"></span>Salade croquante<b>+0,60&nbsp;€</b></button>
+            <button class="ing" type="button" data-ing="tomato"><span class="ing__dot" style="--c:#E23B2E"></span>Tomate fraîche<b>+0,60&nbsp;€</b></button>
+            <button class="ing" type="button" data-ing="onions"><span class="ing__dot" style="--c:#D98E4C"></span>Oignons caramélisés<b>+0,80&nbsp;€</b></button>
+            <button class="ing" type="button" data-ing="sauce"><span class="ing__dot" style="--c:#E8542F"></span>Sauce signature<b>+0,50&nbsp;€</b></button>
+          </div>
+
+          <div class="atelier__total">
+            <span>Ton burger <em id="buildCount">(3 ingrédients)</em></span>
+            <strong id="buildPrice">10,60&nbsp;€</strong>
+          </div>
+          <p class="atelier__msg" id="buildMsg" aria-live="polite"></p>
+          <button class="atelier__reset" id="buildReset" type="button">↺ Recommencer</button>
+        </div>
       </div>
     </section>
 
