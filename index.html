@@ -56,10 +56,13 @@
       <a href="#avis" class="nav__link" data-magnetic>Les avis</a>
       <a href="#infos" class="nav__link" data-magnetic>Nous trouver</a>
     </nav>
-    <a href="#infos" class="nav__cta" data-magnetic>Commander</a>
-    <button class="nav__burger" id="navBurger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav__right">
+      <button class="nav__theme" id="themeToggle" type="button" aria-label="Basculer entre le mode midi et le mode soir">☀️</button>
+      <a href="#infos" class="nav__cta" data-magnetic>Commander</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <!-- Menu mobile plein écran -->
@@ -79,9 +82,15 @@
       <div class="hero__noise"></div>
       <div class="hero__glow"></div>
 
-      <div class="hero__badge reveal">
-        <span class="hero__badge-dot"></span>
-        Nouveau à Sucy-en-Brie · Place Sainte-Bernadette
+      <div class="hero__badges reveal">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Nouveau à Sucy-en-Brie · Place Sainte-Bernadette
+        </div>
+        <div class="hero__badge hero__badge--status" id="openStatus" hidden>
+          <span class="hero__badge-dot"></span>
+          <span id="openText"></span>
+        </div>
       </div>
 
       <h1 class="hero__title" aria-label="Family'zz">
@@ -528,6 +537,16 @@
       </div>
     </section>
 
+    <!-- ══════════ QUIZ : QUEL BURGER ES-TU ? ══════════ -->
+    <section class="quiz" id="quiz">
+      <div class="quiz__head">
+        <p class="quiz__kicker reveal">Le test</p>
+        <h2 class="quiz__title reveal">Quel burger <em>es-tu&nbsp;?</em></h2>
+        <p class="quiz__sub reveal">Cinq questions, aucune mauvaise réponse — et ton burger de destin à la fin.</p>
+      </div>
+      <div class="quiz__box reveal" id="quizBox"></div>
+    </section>
+
     <!-- ══════════ ATELIER : COMPOSE TON BURGER ══════════ -->
     <section class="atelier" id="atelier">
       <div class="atelier__head">
@@ -558,6 +577,27 @@
           </div>
           <p class="atelier__msg" id="buildMsg" aria-live="polite"></p>
           <button class="atelier__reset" id="buildReset" type="button">↺ Recommencer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ SMASH, LE JEU ══════════ -->
+    <section class="smash" id="jeu">
+      <div class="smash__head">
+        <p class="smash__kicker reveal">Le défi</p>
+        <h2 class="smash__title reveal">Smash<em>&nbsp;!</em></h2>
+        <p class="smash__sub reveal">20 secondes derrière la plancha, un maximum de steaks. T'as le coup de spatule&nbsp;?</p>
+      </div>
+      <div class="smash__board reveal">
+        <div class="smash__hud">
+          <span>Score <b id="smashScore">0</b></span>
+          <span>Temps <b id="smashTime">20</b>s</span>
+          <span>Record <b id="smashBest">0</b></span>
+        </div>
+        <div class="smash__grid" id="smashGrid"></div>
+        <div class="smash__foot">
+          <button class="btn btn--primary" id="smashStart" type="button">Lancer la partie</button>
+          <p class="smash__msg" id="smashMsg">Tape sur les steaks dès qu'ils sortent de la plancha.</p>
         </div>
       </div>
     </section>
@@ -628,6 +668,7 @@
 
         <div class="infos__col infos__col--hours reveal">
           <h3 class="infos__hours-title">Horaires</h3>
+          <p class="hours__status" id="hoursStatus" hidden></p>
           <ul class="hours">
             <li><span>Lundi</span><i></i><span>11h30 – 22h30</span></li>
             <li><span>Mardi</span><i></i><span>11h30 – 22h30</span></li>
@@ -654,6 +695,25 @@
     </section>
 
   </main>
+
+  <!-- Burger-témoin : il se fait dévorer au fil du scroll -->
+  <div class="nibble" id="nibble" aria-hidden="true">
+    <svg viewBox="0 0 200 132">
+      <defs>
+        <mask id="nibbleMask">
+          <rect width="200" height="132" fill="#fff"/>
+          <circle class="bite" cx="176" cy="34" r="0"/>
+          <circle class="bite" cx="26" cy="44" r="0"/>
+          <circle class="bite" cx="150" cy="86" r="0"/>
+          <circle class="bite" cx="56" cy="96" r="0"/>
+          <circle class="bite" cx="118" cy="38" r="0"/>
+          <circle class="bite" cx="92" cy="88" r="0"/>
+        </mask>
+      </defs>
+      <g mask="url(#nibbleMask)"><use href="#burger-classic"/></g>
+    </svg>
+    <div class="nibble__crumbs"><i></i><i></i><i></i></div>
+  </div>
 
   <!-- ══════════ FOOTER ══════════ -->
   <footer class="footer">

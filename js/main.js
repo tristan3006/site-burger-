@@ -291,6 +291,255 @@
     render();
   }
 
+  /* ── Mode midi / soir ── */
+  const themeBtn = document.getElementById("themeToggle");
+  const applyTheme = (jour) => {
+    document.body.classList.toggle("theme-jour", jour);
+    themeBtn.textContent = jour ? "🌙" : "☀️";
+    themeBtn.title = jour ? "Passer en mode soir" : "Passer en mode midi";
+  };
+  const savedTheme = localStorage.getItem("fzz-theme");
+  const hourNow = new Date().getHours();
+  let isJour = savedTheme ? savedTheme === "jour" : hourNow >= 7 && hourNow < 18;
+  applyTheme(isJour);
+  themeBtn.addEventListener("click", () => {
+    isJour = !isJour;
+    applyTheme(isJour);
+    localStorage.setItem("fzz-theme", isJour ? "jour" : "soir");
+  });
+
+  /* ── Ouvert / fermé en direct (horaires indicatifs) ── */
+  // [ouverture, fermeture] en minutes — index = getDay() (0 = dimanche)
+  const SCHEDULE = [
+    [12 * 60, 22 * 60 + 30],       // dim
+    [11 * 60 + 30, 22 * 60 + 30],  // lun
+    [11 * 60 + 30, 22 * 60 + 30],  // mar
+    [11 * 60 + 30, 22 * 60 + 30],  // mer
+    [11 * 60 + 30, 22 * 60 + 30],  // jeu
+    [11 * 60 + 30, 23 * 60],       // ven
+    [11 * 60 + 30, 23 * 60],       // sam
+  ];
+  const fmtH = (mins) =>
+    Math.floor(mins / 60) + "h" + String(mins % 60).padStart(2, "0");
+  const updateOpenStatus = () => {
+    const now = new Date();
+    const [open, close] = SCHEDULE[now.getDay()];
+    const mins = now.getHours() * 60 + now.getMinutes();
+    let isOpen, text;
+    if (mins >= open && mins < close) {
+      isOpen = true;
+      text = "Ouvert — on smashe jusqu'à " + fmtH(close);
+    } else if (mins < open) {
+      isOpen = false;
+      text = "Fermé — ouvre aujourd'hui à " + fmtH(open);
+    } else {
+      isOpen = false;
+      text = "Fermé — réouverture demain à " + fmtH(SCHEDULE[(now.getDay() + 1) % 7][0]);
+    }
+    const pill = document.getElementById("openStatus");
+    pill.hidden = false;
+    pill.classList.toggle("is-closed", !isOpen);
+    document.getElementById("openText").textContent = text;
+    const line = document.getElementById("hoursStatus");
+    line.hidden = false;
+    line.textContent = text;
+    line.classList.toggle("is-closed", !isOpen);
+  };
+  updateOpenStatus();
+  setInterval(updateOpenStatus, 60000);
+
+  /* ── Burger-témoin dévoré au fil du scroll ── */
+  const nibble = document.getElementById("nibble");
+  if (nibble) {
+    const bites = [...nibble.querySelectorAll(".bite")];
+    const radii = [30, 28, 32, 30, 26, 34];
+    window.addEventListener("scroll", () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? window.scrollY / max : 0;
+      bites.forEach((b, i) => {
+        b.setAttribute("r", p > (i + 1) / (bites.length + 1) ? radii[i] : 0);
+      });
+      nibble.classList.toggle("is-eaten", p > 0.96);
+    }, { passive: true });
+  }
+
+  /* ── Quiz : quel burger es-tu ? ── */
+  const quizBox = document.getElementById("quizBox");
+  if (quizBox) {
+    const QUESTIONS = [
+      { q: "Ton samedi soir idéal ?", a: [
+        ["Canapé, plaid, série", "classic"],
+        ["Grande tablée qui parle fort", "signature"],
+        ["Match avec les potes", "triple"],
+        ["Balade et marché le lendemain", "veggie"],
+      ]},
+      { q: "Ta sauce de cœur ?", a: [
+        ["Ketchup, valeur sûre", "classic"],
+        ["La signature, évidemment", "signature"],
+        ["Miel-moutarde", "chicken"],
+        ["Yaourt aux herbes", "veggie"],
+      ]},
+      { q: "Face à un défi, tu fais quoi ?", a: [
+        ["Je fonce, on verra bien", "triple"],
+        ["Je réfléchis, puis je fonce", "signature"],
+        ["Je contourne avec style", "chicken"],
+        ["Je reste zen, ça va passer", "veggie"],
+      ]},
+      { q: "Ta faim un midi normal ?", a: [
+        ["Raisonnable", "classic"],
+        ["Solide", "signature"],
+        ["Il va falloir du renfort", "triple"],
+        ["Je picore… en théorie", "chicken"],
+      ]},
+      { q: "Ce qui compte le plus dans un burger ?", a: [
+        ["La tradition, bien faite", "classic"],
+        ["Le goût, point final", "signature"],
+        ["Le croustillant", "chicken"],
+        ["La fraîcheur", "veggie"],
+      ]},
+    ];
+    const RESULTS = {
+      classic: { name: "Le Classic Smash", price: "10,90 €", vb: 132,
+        desc: "Fiable, généreux, jamais décevant : tu es la valeur sûre que tout le monde est content de retrouver.",
+        svg: '<use href="#burger-classic"/>' },
+      signature: { name: "Le Family'zz", price: "13,90 €", vb: 128,
+        desc: "Chaleureux, généreux, un brin star : c'est pour toi qu'on fait le déplacement. Le patron de la carte.",
+        svg: '<use href="#p-bun-top"/><use href="#p-cheese" y="52"/><use href="#p-steak" y="60"/><use href="#p-cheese" y="78"/><use href="#p-steak" y="86"/><use href="#p-bun-bot" y="104"/>' },
+      chicken: { name: "Le Chicken Crunch", price: "11,90 €", vb: 120,
+        desc: "Croustillant dehors, tendre dedans. Tu caches bien ton jeu — et c'est exactement ce qu'on aime.",
+        svg: '<use href="#p-bun-top" y="4"/><use href="#p-salad" y="54"/><use href="#p-cheese" y="66"/><use href="#p-chicken" y="76"/><use href="#p-bun-bot" y="94"/>' },
+      veggie: { name: "Le Green Garden", price: "11,50 €", vb: 120,
+        desc: "Frais, malin, plein de bonnes idées : tu prouves qu'on peut être green et sérieusement gourmand.",
+        svg: '<use href="#p-bun-top" y="4"/><use href="#p-salad" y="54"/><use href="#p-tomato" y="66"/><use href="#p-veggie" y="76"/><use href="#p-bun-bot" y="94"/>' },
+      triple: { name: "Le Triple Z", price: "16,90 €", vb: 148,
+        desc: "Trois étages, zéro compromis. Tu vois grand, tout le temps — et tu assumes jusqu'à la dernière bouchée.",
+        svg: '<use href="#p-bun-top"/><use href="#p-cheese" y="52"/><use href="#p-steak" y="60"/><use href="#p-cheese" y="76"/><use href="#p-steak" y="84"/><use href="#p-cheese" y="100"/><use href="#p-steak" y="108"/><use href="#p-bun-bot" y="126"/>' },
+    };
+    const PRIORITY = ["signature", "triple", "chicken", "veggie", "classic"];
+    let qIndex = 0;
+    let scores = {};
+
+    const showQuestion = () => {
+      const { q, a } = QUESTIONS[qIndex];
+      quizBox.innerHTML =
+        '<div class="quiz__inner">' +
+        `<p class="quiz__step">Question ${qIndex + 1} / ${QUESTIONS.length}</p>` +
+        `<h3 class="quiz__q">${q}</h3>` +
+        '<div class="quiz__answers">' +
+        a.map(([t, k], i) => `<button class="quiz__ans" type="button" data-k="${k}">${t}</button>`).join("") +
+        "</div></div>";
+      quizBox.querySelectorAll(".quiz__ans").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          scores[btn.dataset.k] = (scores[btn.dataset.k] || 0) + 1;
+          qIndex++;
+          if (qIndex < QUESTIONS.length) showQuestion();
+          else showResult();
+        });
+      });
+    };
+
+    const showResult = () => {
+      const best = PRIORITY.reduce((acc, k) =>
+        (scores[k] || 0) > (scores[acc] || 0) ? k : acc, "classic");
+      const r = RESULTS[best];
+      quizBox.innerHTML =
+        '<div class="quiz__inner quiz__result">' +
+        '<p class="quiz__rlabel">Ton burger de destin, c\'est…</p>' +
+        `<svg class="quiz__svg" viewBox="0 0 200 ${r.vb}" aria-hidden="true">${r.svg}</svg>` +
+        `<h3 class="quiz__rname">${r.name}</h3>` +
+        `<p class="quiz__rdesc">${r.desc}</p>` +
+        `<p class="quiz__rprice">${r.price}</p>` +
+        '<div class="quiz__actions">' +
+        '<a class="btn btn--primary" href="#menu">Retrouve-le sur la carte</a>' +
+        '<button class="btn btn--ghost" type="button" id="quizAgain">Refaire le test</button>' +
+        "</div></div>";
+      document.getElementById("quizAgain").addEventListener("click", () => {
+        qIndex = 0; scores = {}; showQuestion();
+      });
+    };
+    showQuestion();
+  }
+
+  /* ── Smash, le jeu ── */
+  const smashGrid = document.getElementById("smashGrid");
+  if (smashGrid) {
+    const scoreEl = document.getElementById("smashScore");
+    const timeEl = document.getElementById("smashTime");
+    const bestEl = document.getElementById("smashBest");
+    const msgEl2 = document.getElementById("smashMsg");
+    const startBtn = document.getElementById("smashStart");
+    const DURATION = 20;
+    let running = false, score = 0, timeLeft = DURATION;
+    let tickInterval = null, spawnTimeout = null;
+    const hideTimeouts = new Map();
+    bestEl.textContent = localStorage.getItem("fzz-smash-best") || "0";
+
+    const holes = [];
+    for (let i = 0; i < 9; i++) {
+      const hole = document.createElement("button");
+      hole.className = "hole";
+      hole.type = "button";
+      hole.setAttribute("aria-label", "Plancha " + (i + 1));
+      hole.innerHTML = '<span class="steakling"></span>';
+      hole.addEventListener("pointerdown", () => {
+        if (!running || !hole.classList.contains("up")) return;
+        score++;
+        scoreEl.textContent = score;
+        hole.classList.remove("up");
+        hole.classList.add("hit");
+        clearTimeout(hideTimeouts.get(hole));
+        setTimeout(() => hole.classList.remove("hit"), 220);
+      });
+      smashGrid.appendChild(hole);
+      holes.push(hole);
+    }
+
+    const spawn = () => {
+      if (!running) return;
+      const free = holes.filter((h) => !h.classList.contains("up"));
+      if (free.length) {
+        const hole = free[Math.floor(Math.random() * free.length)];
+        hole.classList.add("up");
+        const upFor = Math.max(520, 950 - score * 14);
+        hideTimeouts.set(hole, setTimeout(() => hole.classList.remove("up"), upFor));
+      }
+      spawnTimeout = setTimeout(spawn, Math.max(360, 680 - score * 9));
+    };
+
+    const endGame = () => {
+      running = false;
+      clearInterval(tickInterval);
+      clearTimeout(spawnTimeout);
+      hideTimeouts.forEach((t) => clearTimeout(t));
+      holes.forEach((h) => h.classList.remove("up"));
+      const best = Math.max(score, parseInt(localStorage.getItem("fzz-smash-best") || "0", 10));
+      localStorage.setItem("fzz-smash-best", best);
+      bestEl.textContent = best;
+      msgEl2.textContent =
+        score < 5 ? `${score} smash… le steak t'a regardé de travers 😅` :
+        score < 12 ? `${score} smash — pas mal, commis confirmé !` :
+        score < 20 ? `${score} smash — solide. Chef de plancha !` :
+        `${score} smash — machine à smash 🔥 Viens, on t'embauche.`;
+      startBtn.textContent = "Rejouer";
+    };
+
+    startBtn.addEventListener("click", () => {
+      if (running) return;
+      running = true;
+      score = 0; timeLeft = DURATION;
+      scoreEl.textContent = "0";
+      timeEl.textContent = timeLeft;
+      msgEl2.textContent = "Go !";
+      startBtn.textContent = "Ça smashe…";
+      tickInterval = setInterval(() => {
+        timeLeft--;
+        timeEl.textContent = timeLeft;
+        if (timeLeft <= 0) endGame();
+      }, 1000);
+      spawn();
+    });
+  }
+
   /* ── Avis : drag horizontal ── */
   const track = document.getElementById("reviewsTrack");
   if (track) {
