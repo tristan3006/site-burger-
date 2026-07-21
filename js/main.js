@@ -92,9 +92,10 @@
     a.addEventListener("click", () => toggleMenu(false))
   );
 
-  /* ── Burger héro : parallaxe des couches ── */
+  /* ── Burger héro : parallaxe des couches + ingrédients flottants ── */
   const heroBurger = document.getElementById("heroBurger");
   const layers = heroBurger ? [...heroBurger.querySelectorAll(".b-layer")] : [];
+  const bits = heroBurger ? [...heroBurger.querySelectorAll(".bit")] : [];
   if (layers.length && !reduceMotion) {
     // À la souris : les couches s'écartent selon leur profondeur
     window.addEventListener("mousemove", (e) => {
@@ -103,6 +104,10 @@
       layers.forEach((l) => {
         const d = parseFloat(l.dataset.depth);
         l.style.transform = `translate(${cx * d * 0.9}px, ${cy * d * 0.55}px)`;
+      });
+      bits.forEach((b) => {
+        const d = parseFloat(b.dataset.depth);
+        b.style.transform = `translate(${cx * d * -1.4}px, ${cy * d * -0.9}px)`;
       });
     });
     // Au scroll : le burger "explose" doucement en couches
@@ -291,23 +296,6 @@
     render();
   }
 
-  /* ── Mode midi / soir ── */
-  const themeBtn = document.getElementById("themeToggle");
-  const applyTheme = (jour) => {
-    document.body.classList.toggle("theme-jour", jour);
-    themeBtn.textContent = jour ? "🌙" : "☀️";
-    themeBtn.title = jour ? "Passer en mode soir" : "Passer en mode midi";
-  };
-  const savedTheme = localStorage.getItem("fzz-theme");
-  const hourNow = new Date().getHours();
-  let isJour = savedTheme ? savedTheme === "jour" : hourNow >= 7 && hourNow < 18;
-  applyTheme(isJour);
-  themeBtn.addEventListener("click", () => {
-    isJour = !isJour;
-    applyTheme(isJour);
-    localStorage.setItem("fzz-theme", isJour ? "jour" : "soir");
-  });
-
   /* ── Ouvert / fermé en direct (horaires indicatifs) ── */
   // [ouverture, fermeture] en minutes — index = getDay() (0 = dimanche)
   const SCHEDULE = [
@@ -458,86 +446,6 @@
       });
     };
     showQuestion();
-  }
-
-  /* ── Smash, le jeu ── */
-  const smashGrid = document.getElementById("smashGrid");
-  if (smashGrid) {
-    const scoreEl = document.getElementById("smashScore");
-    const timeEl = document.getElementById("smashTime");
-    const bestEl = document.getElementById("smashBest");
-    const msgEl2 = document.getElementById("smashMsg");
-    const startBtn = document.getElementById("smashStart");
-    const DURATION = 20;
-    let running = false, score = 0, timeLeft = DURATION;
-    let tickInterval = null, spawnTimeout = null;
-    const hideTimeouts = new Map();
-    bestEl.textContent = localStorage.getItem("fzz-smash-best") || "0";
-
-    const holes = [];
-    for (let i = 0; i < 9; i++) {
-      const hole = document.createElement("button");
-      hole.className = "hole";
-      hole.type = "button";
-      hole.setAttribute("aria-label", "Plancha " + (i + 1));
-      hole.innerHTML = '<span class="steakling"></span>';
-      hole.addEventListener("pointerdown", () => {
-        if (!running || !hole.classList.contains("up")) return;
-        score++;
-        scoreEl.textContent = score;
-        hole.classList.remove("up");
-        hole.classList.add("hit");
-        clearTimeout(hideTimeouts.get(hole));
-        setTimeout(() => hole.classList.remove("hit"), 220);
-      });
-      smashGrid.appendChild(hole);
-      holes.push(hole);
-    }
-
-    const spawn = () => {
-      if (!running) return;
-      const free = holes.filter((h) => !h.classList.contains("up"));
-      if (free.length) {
-        const hole = free[Math.floor(Math.random() * free.length)];
-        hole.classList.add("up");
-        const upFor = Math.max(520, 950 - score * 14);
-        hideTimeouts.set(hole, setTimeout(() => hole.classList.remove("up"), upFor));
-      }
-      spawnTimeout = setTimeout(spawn, Math.max(360, 680 - score * 9));
-    };
-
-    const endGame = () => {
-      running = false;
-      clearInterval(tickInterval);
-      clearTimeout(spawnTimeout);
-      hideTimeouts.forEach((t) => clearTimeout(t));
-      holes.forEach((h) => h.classList.remove("up"));
-      const best = Math.max(score, parseInt(localStorage.getItem("fzz-smash-best") || "0", 10));
-      localStorage.setItem("fzz-smash-best", best);
-      bestEl.textContent = best;
-      msgEl2.textContent =
-        score < 5 ? `${score} smash… le steak t'a regardé de travers 😅` :
-        score < 12 ? `${score} smash — pas mal, commis confirmé !` :
-        score < 20 ? `${score} smash — solide. Chef de plancha !` :
-        `${score} smash — machine à smash 🔥 Viens, on t'embauche.`;
-      startBtn.textContent = "Rejouer";
-    };
-
-    startBtn.addEventListener("click", () => {
-      if (running) return;
-      running = true;
-      score = 0; timeLeft = DURATION;
-      scoreEl.textContent = "0";
-      timeEl.textContent = timeLeft;
-      msgEl2.textContent = "Go !";
-      startBtn.textContent = "Ça smashe…";
-      tickInterval = setInterval(() => {
-        timeLeft--;
-        timeEl.textContent = timeLeft;
-        if (timeLeft <= 0) endGame();
-      }, 1000);
-      spawn();
-    });
   }
 
   /* ── Avis : drag horizontal ── */

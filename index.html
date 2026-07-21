@@ -10,7 +10,7 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
 </head>
@@ -57,7 +57,6 @@
       <a href="#infos" class="nav__link" data-magnetic>Nous trouver</a>
     </nav>
     <div class="nav__right">
-      <button class="nav__theme" id="themeToggle" type="button" aria-label="Basculer entre le mode midi et le mode soir">☀️</button>
       <a href="#infos" class="nav__cta" data-magnetic>Commander</a>
       <button class="nav__burger" id="navBurger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -79,8 +78,8 @@
 
     <!-- ══════════ HERO ══════════ -->
     <section class="hero">
-      <div class="hero__noise"></div>
       <div class="hero__glow"></div>
+      <div class="hero__glow hero__glow--2"></div>
 
       <div class="hero__badges reveal">
         <div class="hero__badge">
@@ -100,6 +99,13 @@
 
       <!-- Burger SVG interactif, chaque couche flotte en parallaxe -->
       <div class="hero__burger" id="heroBurger" aria-hidden="true">
+        <div class="hero__bits">
+          <span class="bit bit--tomato" data-depth="20"><i></i></span>
+          <span class="bit bit--cheese" data-depth="34"><i></i></span>
+          <span class="bit bit--salad" data-depth="14"><i></i></span>
+          <span class="bit bit--sesame" data-depth="44"><i></i></span>
+          <span class="bit bit--sesame2" data-depth="26"><i></i></span>
+        </div>
         <div class="steam"><i></i><i></i><i></i></div>
         <svg viewBox="0 0 400 340" class="burger-svg">
           <!-- Pain du bas -->
@@ -577,27 +583,6 @@
           </div>
           <p class="atelier__msg" id="buildMsg" aria-live="polite"></p>
           <button class="atelier__reset" id="buildReset" type="button">↺ Recommencer</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════ SMASH, LE JEU ══════════ -->
-    <section class="smash" id="jeu">
-      <div class="smash__head">
-        <p class="smash__kicker reveal">Le défi</p>
-        <h2 class="smash__title reveal">Smash<em>&nbsp;!</em></h2>
-        <p class="smash__sub reveal">20 secondes derrière la plancha, un maximum de steaks. T'as le coup de spatule&nbsp;?</p>
-      </div>
-      <div class="smash__board reveal">
-        <div class="smash__hud">
-          <span>Score <b id="smashScore">0</b></span>
-          <span>Temps <b id="smashTime">20</b>s</span>
-          <span>Record <b id="smashBest">0</b></span>
-        </div>
-        <div class="smash__grid" id="smashGrid"></div>
-        <div class="smash__foot">
-          <button class="btn btn--primary" id="smashStart" type="button">Lancer la partie</button>
-          <p class="smash__msg" id="smashMsg">Tape sur les steaks dès qu'ils sortent de la plancha.</p>
         </div>
       </div>
     </section>
