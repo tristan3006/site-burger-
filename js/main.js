@@ -20,7 +20,7 @@
   window.addEventListener("load", () => {
     if (reduceMotion) { endIntro(); return; }
     preloader.classList.add("is-play");
-    introTimer = setTimeout(endIntro, 4150);
+    introTimer = setTimeout(endIntro, 3350);
   });
   document.getElementById("introSkip").addEventListener("click", endIntro);
   // Sécurité : ne jamais rester bloqué sur l'intro

@@ -296,6 +296,23 @@
           <use href="#p-steak" y="92"/>
           <use href="#p-bun-bot" y="110"/>
         </g>
+        <g id="p-bacon">
+          <path d="M40 6 Q52 0 64 6 Q76 12 88 6 Q100 0 112 6 Q124 12 136 6 Q148 0 160 6 L160 12 Q148 18 136 12 Q124 6 112 12 Q100 18 88 12 Q76 6 64 12 Q52 18 40 12 Z" fill="#A33B2A"/>
+          <path d="M40 8 Q52 2 64 8 Q76 14 88 8 Q100 2 112 8 Q124 14 136 8 Q148 2 160 8" fill="none" stroke="#C75B42" stroke-width="2.4"/>
+        </g>
+        <g id="combo-fries">
+          <rect x="10" y="2" width="8" height="34" rx="4" fill="#FFD34E" transform="rotate(-7 14 19)"/>
+          <rect x="24" y="-4" width="8" height="40" rx="4" fill="#F6C33C"/>
+          <rect x="38" y="0" width="8" height="36" rx="4" fill="#FFD34E" transform="rotate(6 42 18)"/>
+          <path d="M2 28 L66 28 L60 74 Q59.4 78 55 78 L13 78 Q8.6 78 8 74 Z" fill="#FF6B2C"/>
+          <path d="M2 28 L66 28 L64.7 38 L3.3 38 Z" fill="#E5551B"/>
+        </g>
+        <g id="combo-cup">
+          <rect x="21" y="0" width="6" height="14" rx="3" fill="#FF6B2C" transform="rotate(6 24 7)"/>
+          <rect x="2" y="11" width="44" height="9" rx="4.5" fill="#E5551B"/>
+          <path d="M5 20 L43 20 L39.4 80 Q39.1 84 35 84 L13 84 Q8.9 84 8.6 80 Z" fill="#F6EFE3"/>
+          <path d="M7.2 46 L40.8 46 L40 58 L8 58 Z" fill="#FF8C52"/>
+        </g>
       </defs>
     </svg>
 
@@ -304,18 +321,113 @@
       <div class="menu__head">
         <p class="menu__kicker reveal">La carte</p>
         <h2 class="menu__title reveal">Fraîchement <em>smashés</em></h2>
-        <p class="menu__note reveal">Carte indicative — retrouvez la carte complète et les prix du jour en boutique ou sur Uber Eats.</p>
+        <p class="menu__note reveal">Carte indicative — retrouvez la carte complète et les prix du jour en boutique ou sur Uber Eats. Les menus sont servis avec frites maison et boisson 33&nbsp;cl.</p>
       </div>
 
       <div class="menu__tabs reveal" role="tablist">
-        <button class="menu__tab is-active" data-tab="burgers" role="tab">Burgers</button>
-        <button class="menu__tab" data-tab="sides" role="tab">Sides</button>
+        <button class="menu__tab is-active" data-tab="menus" role="tab">Menus</button>
+        <button class="menu__tab" data-tab="burgers" role="tab">Burgers</button>
+        <button class="menu__tab" data-tab="texmex" role="tab">Tex Mex</button>
+        <button class="menu__tab" data-tab="sides" role="tab">Accompagnements</button>
         <button class="menu__tab" data-tab="desserts" role="tab">Desserts &amp; Shakes</button>
       </div>
 
       <div class="menu__grid" id="menuGrid">
+        <!-- MENUS : burger + frites maison + boisson 33 cl -->
+        <article class="dish reveal" data-cat="menus" data-tilt>
+          <div class="dish__badge">Signature</div>
+          <div class="dish__media">
+            <svg class="dish__art dish__art--combo" viewBox="0 0 310 150" aria-hidden="true">
+              <g transform="translate(0 58) scale(.72)">
+                <use href="#p-bun-top"/>
+                <use href="#p-cheese" y="52"/>
+                <use href="#p-steak" y="60"/>
+                <use href="#p-cheese" y="78"/>
+                <use href="#p-steak" y="86"/>
+                <use href="#p-bun-bot" y="104"/>
+              </g>
+              <use href="#combo-fries" transform="translate(168 70)"/>
+              <use href="#combo-cup" transform="translate(250 64)"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Menu Family'zz</h3>
+            <p class="dish__desc">Le double smash signature, frites maison et boisson 33&nbsp;cl.</p>
+            <div class="dish__foot"><span class="dish__price">17,50&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal" data-cat="menus" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art dish__art--combo" viewBox="0 0 310 150" aria-hidden="true">
+              <use href="#burger-classic" transform="translate(0 58) scale(.72)"/>
+              <use href="#combo-fries" transform="translate(168 70)"/>
+              <use href="#combo-cup" transform="translate(250 64)"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Menu Classic Smash</h3>
+            <p class="dish__desc">Le classic, frites maison et boisson 33&nbsp;cl.</p>
+            <div class="dish__foot"><span class="dish__price">14,50&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal" data-cat="menus" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art dish__art--combo" viewBox="0 0 310 150" aria-hidden="true">
+              <g transform="translate(0 63) scale(.72)">
+                <use href="#p-bun-top" y="4"/>
+                <use href="#p-salad" y="54"/>
+                <use href="#p-cheese" y="66"/>
+                <use href="#p-chicken" y="76"/>
+                <use href="#p-bun-bot" y="94"/>
+              </g>
+              <use href="#combo-fries" transform="translate(168 70)"/>
+              <use href="#combo-cup" transform="translate(250 64)"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Menu Chicken Crunch</h3>
+            <p class="dish__desc">Le poulet croustillant, frites maison et boisson 33&nbsp;cl.</p>
+            <div class="dish__foot"><span class="dish__price">15,50&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal" data-cat="menus" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art dish__art--combo" viewBox="0 0 310 150" aria-hidden="true">
+              <g transform="translate(0 63) scale(.72)">
+                <use href="#p-bun-top" y="4"/>
+                <use href="#p-salad" y="54"/>
+                <use href="#p-tomato" y="66"/>
+                <use href="#p-veggie" y="76"/>
+                <use href="#p-bun-bot" y="94"/>
+              </g>
+              <use href="#combo-fries" transform="translate(168 70)"/>
+              <use href="#combo-cup" transform="translate(250 64)"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Menu Green Garden</h3>
+            <p class="dish__desc">Le végétal, frites maison et boisson 33&nbsp;cl.</p>
+            <div class="dish__foot"><span class="dish__price">15,00&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal" data-cat="menus" data-tilt>
+          <div class="dish__badge dish__badge--kids">Kids</div>
+          <div class="dish__media">
+            <svg class="dish__art dish__art--combo" viewBox="0 0 310 150" aria-hidden="true">
+              <use href="#burger-classic" transform="translate(20 76) scale(.56)"/>
+              <use href="#combo-fries" transform="translate(168 82) scale(.85)"/>
+              <use href="#combo-cup" transform="translate(244 78) scale(.85)"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Menu P'tit Family</h3>
+            <p class="dish__desc">Smash simple, cheddar, ketchup — frites, boisson et surprise pour les petits gourmands.</p>
+            <div class="dish__foot"><span class="dish__price">8,50&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+
         <!-- BURGERS -->
-        <article class="dish reveal" data-cat="burgers" data-tilt>
+        <article class="dish reveal is-hidden" data-cat="burgers" data-tilt>
           <div class="dish__badge">Signature</div>
           <div class="dish__media">
             <svg class="dish__art" viewBox="0 0 200 128" aria-hidden="true">
@@ -333,7 +445,7 @@
             <div class="dish__foot"><span class="dish__price">13,90&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
-        <article class="dish reveal" data-cat="burgers" data-tilt>
+        <article class="dish reveal is-hidden" data-cat="burgers" data-tilt>
           <div class="dish__media">
             <svg class="dish__art" viewBox="0 0 200 132" aria-hidden="true">
               <use href="#burger-classic"/>
@@ -345,7 +457,7 @@
             <div class="dish__foot"><span class="dish__price">10,90&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
-        <article class="dish reveal" data-cat="burgers" data-tilt>
+        <article class="dish reveal is-hidden" data-cat="burgers" data-tilt>
           <div class="dish__media">
             <svg class="dish__art" viewBox="0 0 200 120" aria-hidden="true">
               <use href="#p-bun-top" y="4"/>
@@ -361,7 +473,7 @@
             <div class="dish__foot"><span class="dish__price">11,90&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
-        <article class="dish reveal" data-cat="burgers" data-tilt>
+        <article class="dish reveal is-hidden" data-cat="burgers" data-tilt>
           <div class="dish__media">
             <svg class="dish__art" viewBox="0 0 200 120" aria-hidden="true">
               <use href="#p-bun-top" y="4"/>
@@ -377,20 +489,23 @@
             <div class="dish__foot"><span class="dish__price">11,50&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
-        <article class="dish reveal" data-cat="burgers" data-tilt>
-          <div class="dish__badge dish__badge--kids">Kids</div>
+        <article class="dish reveal is-hidden" data-cat="burgers" data-tilt>
           <div class="dish__media">
-            <svg class="dish__art dish__art--small" viewBox="0 0 200 110" aria-hidden="true">
-              <use href="#burger-classic" transform="translate(28 4) scale(.72)"/>
+            <svg class="dish__art" viewBox="0 0 200 112" aria-hidden="true">
+              <use href="#p-bun-top"/>
+              <use href="#p-cheese" y="52"/>
+              <use href="#p-bacon" y="58"/>
+              <use href="#p-steak" y="72"/>
+              <use href="#p-bun-bot" y="90"/>
             </svg>
           </div>
           <div class="dish__body">
-            <h3 class="dish__name">Le P'tit Family</h3>
-            <p class="dish__desc">Smash simple, cheddar, ketchup — avec frites et boisson. Pensé pour les petits gourmands.</p>
-            <div class="dish__foot"><span class="dish__price">8,50&nbsp;€</span><span class="dish__dot"></span></div>
+            <h3 class="dish__name">Le Bacon Grill</h3>
+            <p class="dish__desc">Smash de bœuf, bacon de bœuf grillé, cheddar fondant, sauce barbecue fumée.</p>
+            <div class="dish__foot"><span class="dish__price">12,90&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
-        <article class="dish reveal" data-cat="burgers" data-tilt>
+        <article class="dish reveal is-hidden" data-cat="burgers" data-tilt>
           <div class="dish__media">
             <svg class="dish__art" viewBox="0 0 200 148" aria-hidden="true">
               <use href="#p-bun-top"/>
@@ -471,6 +586,41 @@
         <article class="dish reveal is-hidden" data-cat="sides" data-tilt>
           <div class="dish__media">
             <svg class="dish__art" viewBox="0 0 200 150" aria-hidden="true">
+              <rect x="46" y="34" width="24" height="92" rx="12" fill="#E0A34A" transform="rotate(-24 58 80)"/>
+              <rect x="80" y="26" width="24" height="100" rx="12" fill="#EBB159"/>
+              <rect x="114" y="34" width="24" height="92" rx="12" fill="#E0A34A" transform="rotate(18 126 80)"/>
+              <rect x="83" y="26" width="18" height="22" rx="9" fill="#FFF6E8"/>
+              <circle cx="70" cy="70" r="2.2" fill="#B87B2C"/><circle cx="92" cy="90" r="2.2" fill="#B87B2C"/>
+              <circle cx="126" cy="72" r="2.2" fill="#B87B2C"/><circle cx="104" cy="58" r="2.2" fill="#B87B2C"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Mozza Sticks x4</h3>
+            <p class="dish__desc">Bâtonnets de mozzarella panés, cœur ultra-fondant.</p>
+            <div class="dish__foot"><span class="dish__price">5,00&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal is-hidden" data-cat="sides" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art" viewBox="0 0 200 150" aria-hidden="true">
+              <path d="M52 128 Q40 96 62 58 Q70 44 80 58 Q94 96 84 128 Q68 138 52 128 Z" fill="#EFB75C"/>
+              <path d="M90 132 Q84 94 108 52 Q117 38 126 54 Q142 96 128 132 Q108 142 90 132 Z" fill="#E8A94A"/>
+              <path d="M136 126 Q130 98 148 66 Q156 54 164 68 Q174 100 162 126 Q148 134 136 126 Z" fill="#EFB75C"/>
+              <path d="M62 58 Q70 44 80 58 L76 66 Q70 56 66 66 Z" fill="#B87B2C"/>
+              <path d="M108 52 Q117 38 126 54 L121 62 Q116 50 112 60 Z" fill="#B87B2C"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Potatoes</h3>
+            <p class="dish__desc">Quartiers de pommes de terre épicés, cuits au four.</p>
+            <div class="dish__foot"><span class="dish__price">4,00&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+
+        <!-- TEX MEX -->
+        <article class="dish reveal is-hidden" data-cat="texmex" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art" viewBox="0 0 200 150" aria-hidden="true">
               <rect x="52" y="40" width="27" height="88" rx="13.5" fill="#DFA045" transform="rotate(-14 65 84)"/>
               <rect x="88" y="32" width="27" height="96" rx="13.5" fill="#EBB159"/>
               <rect x="124" y="42" width="27" height="84" rx="13.5" fill="#DFA045" transform="rotate(12 137 84)"/>
@@ -484,6 +634,61 @@
             <h3 class="dish__name">Tenders x5</h3>
             <p class="dish__desc">Aiguillettes de poulet marinées et panées maison.</p>
             <div class="dish__foot"><span class="dish__price">6,90&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal is-hidden" data-cat="texmex" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art" viewBox="0 0 200 150" aria-hidden="true">
+              <ellipse cx="70" cy="88" rx="34" ry="21" fill="#D2823B" transform="rotate(-18 70 88)"/>
+              <ellipse cx="56" cy="72" rx="14" ry="10" fill="#C77330" transform="rotate(-18 56 72)"/>
+              <ellipse cx="128" cy="76" rx="30" ry="19" fill="#DFA045" transform="rotate(14 128 76)"/>
+              <ellipse cx="142" cy="62" rx="12" ry="9" fill="#C77330" transform="rotate(14 142 62)"/>
+              <ellipse cx="100" cy="112" rx="32" ry="20" fill="#D2823B" transform="rotate(4 100 112)"/>
+              <circle cx="76" cy="92" r="2.4" fill="#A35B22"/><circle cx="124" cy="80" r="2.4" fill="#A35B22"/>
+              <circle cx="102" cy="114" r="2.4" fill="#A35B22"/><circle cx="60" cy="80" r="2" fill="#A35B22"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Wings x8</h3>
+            <p class="dish__desc">Ailes de poulet marinées, grillées puis nappées de sauce au choix.</p>
+            <div class="dish__foot"><span class="dish__price">7,90&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal is-hidden" data-cat="texmex" data-tilt>
+          <div class="dish__media">
+            <svg class="dish__art" viewBox="0 0 200 150" aria-hidden="true">
+              <rect x="42" y="66" width="44" height="34" rx="15" fill="#E8B054" transform="rotate(-12 64 83)"/>
+              <rect x="96" y="52" width="46" height="36" rx="16" fill="#F0BC62" transform="rotate(8 119 70)"/>
+              <rect x="72" y="98" width="42" height="32" rx="14" fill="#E8B054" transform="rotate(4 93 114)"/>
+              <rect x="128" y="96" width="40" height="30" rx="13" fill="#DFA045" transform="rotate(-8 148 111)"/>
+              <circle cx="64" cy="84" r="2" fill="#C98A2E"/><circle cx="118" cy="70" r="2" fill="#C98A2E"/>
+              <circle cx="93" cy="114" r="2" fill="#C98A2E"/><circle cx="148" cy="110" r="2" fill="#C98A2E"/>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Nuggets x10</h3>
+            <p class="dish__desc">Les classiques, dorés et croustillants, 100&nbsp;% filet.</p>
+            <div class="dish__foot"><span class="dish__price">6,50&nbsp;€</span><span class="dish__dot"></span></div>
+          </div>
+        </article>
+        <article class="dish reveal is-hidden" data-cat="texmex" data-tilt>
+          <div class="dish__badge">À partager</div>
+          <div class="dish__media">
+            <svg class="dish__art" viewBox="0 0 200 150" aria-hidden="true">
+              <rect x="60" y="34" width="22" height="70" rx="11" fill="#DFA045" transform="rotate(-16 71 69)"/>
+              <rect x="92" y="28" width="22" height="74" rx="11" fill="#EBB159"/>
+              <rect x="122" y="36" width="22" height="68" rx="11" fill="#DFA045" transform="rotate(14 133 70)"/>
+              <ellipse cx="62" cy="102" rx="22" ry="14" fill="#D2823B" transform="rotate(-14 62 102)"/>
+              <ellipse cx="140" cy="104" rx="21" ry="13" fill="#D2823B" transform="rotate(10 140 104)"/>
+              <path d="M40 92 L160 92 L149 138 Q148 144 141 144 L59 144 Q52 144 51 138 Z" fill="#F6EFE3"/>
+              <path d="M40 92 L160 92 L158 102 L42 102 Z" fill="#E3D8C4"/>
+              <text x="100" y="128" text-anchor="middle" font-family="inherit" font-weight="800" font-size="17" fill="#171209">F'zz</text>
+            </svg>
+          </div>
+          <div class="dish__body">
+            <h3 class="dish__name">Box Tex Mex</h3>
+            <p class="dish__desc">Tenders, wings et nuggets réunis, deux sauces au choix. Pour les tablées.</p>
+            <div class="dish__foot"><span class="dish__price">12,90&nbsp;€</span><span class="dish__dot"></span></div>
           </div>
         </article>
 
