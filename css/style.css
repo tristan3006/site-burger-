@@ -378,11 +378,41 @@ em { font-style: italic; color: var(--flame); }
   background: var(--noir-2);
   border: 1px solid rgba(246, 239, 227, .08);
   border-radius: var(--radius);
-  padding: 34px 30px 28px;
+  padding: 0;
   overflow: hidden;
   transition: border-color .35s, transform .5s var(--ease), opacity .5s;
   transform-style: preserve-3d;
 }
+
+/* Zone visuelle façon Uber Eats : illustration du plat sur fond chaud */
+.dish__media {
+  position: relative;
+  height: 185px;
+  display: flex; align-items: flex-end; justify-content: center;
+  background:
+    radial-gradient(circle at 50% 82%, rgba(255, 140, 60, .2), transparent 62%),
+    linear-gradient(180deg, #201709, #171209);
+  border-bottom: 1px solid rgba(246, 239, 227, .07);
+  overflow: hidden;
+}
+.dish__media::before {
+  content: "";
+  position: absolute; bottom: 10px; left: 50%;
+  width: 62%; height: 16px; transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(0, 0, 0, .5), transparent 70%);
+  border-radius: 50%;
+}
+.dish__art {
+  position: relative;
+  width: min(64%, 220px); height: auto;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 14px 16px rgba(0, 0, 0, .4));
+  transform-origin: 50% 92%;
+  transition: transform .55s var(--ease);
+}
+.dish:hover .dish__art { transform: scale(1.08) rotate(-1.5deg); }
+
+.dish__body { padding: 24px 28px 26px; }
 .dish::before {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(115deg, transparent 30%, rgba(255, 185, 46, .07) 48%, transparent 60%);
@@ -395,14 +425,14 @@ em { font-style: italic; color: var(--flame); }
 .dish.is-hidden { display: none; }
 
 .dish__badge {
-  position: absolute; top: 20px; right: 20px;
+  position: absolute; top: 16px; right: 16px; z-index: 2;
   font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
   background: var(--flame); color: var(--noir);
   padding: 6px 13px; border-radius: 99px;
 }
 .dish__badge--kids { background: var(--vert); }
 
-.dish__name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; padding-right: 80px; }
+.dish__name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
 .dish__desc { color: var(--creme-dim); font-size: .93rem; line-height: 1.6; min-height: 3.1em; }
 .dish__foot {
   margin-top: 22px; display: flex; align-items: center; justify-content: space-between;
