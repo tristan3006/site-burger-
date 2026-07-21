@@ -208,6 +208,7 @@
     const INGS = {
       steak:  { sym: "#p-steak",  h: 16, price: 2.5, label: "Steak smashé" },
       cheese: { sym: "#p-cheese", h: 9,  price: 1.0, label: "Cheddar affiné" },
+      stnectaire: { sym: "#p-cheese-white", h: 9, price: 1.5, label: "St-Nectaire" },
       salad:  { sym: "#p-salad",  h: 13, price: 0.6, label: "Salade croquante" },
       tomato: { sym: "#p-tomato", h: 9,  price: 0.6, label: "Tomate fraîche" },
       onions: { sym: "#p-onions", h: 10, price: 0.8, label: "Oignons caramélisés" },
@@ -387,21 +388,21 @@
       ]},
     ];
     const RESULTS = {
-      classic: { name: "Le Classic Smash", price: "10,90 €", vb: 132,
-        desc: "Fiable, généreux, jamais décevant : tu es la valeur sûre que tout le monde est content de retrouver.",
+      classic: { name: "Le Classic Cheeseburger", price: "15,90 € en menu", vb: 132,
+        desc: "Fiable, généreux, jamais décevant : tu es la valeur sûre que tout le monde est content de retrouver. Le n°2 le plus aimé, et ce n'est pas un hasard.",
         svg: '<use href="#burger-classic"/>' },
-      signature: { name: "Le Family'zz", price: "13,90 €", vb: 128,
-        desc: "Chaleureux, généreux, un brin star : c'est pour toi qu'on fait le déplacement. Le patron de la carte.",
-        svg: '<use href="#p-bun-top"/><use href="#p-cheese" y="52"/><use href="#p-steak" y="60"/><use href="#p-cheese" y="78"/><use href="#p-steak" y="86"/><use href="#p-bun-bot" y="104"/>' },
-      chicken: { name: "Le Chicken Crunch", price: "11,90 €", vb: 120,
+      signature: { name: "L'Auvergnat", price: "17,50 € en menu", vb: 120,
+        desc: "St-Nectaire fondant, oignons caramélisés, sauce ranch : du caractère et de la générosité. Le n°1 le plus aimé — comme toi, une valeur qui rassemble.",
+        svg: '<use href="#p-bun-top"/><use href="#p-salad" y="50"/><use href="#p-tomato" y="62"/><use href="#p-cheese-white" y="70"/><use href="#p-steak" y="80"/><use href="#p-bun-bot" y="98"/>' },
+      chicken: { name: "Les Tenders", price: "10,00 € en menu", vb: 150,
         desc: "Croustillant dehors, tendre dedans. Tu caches bien ton jeu — et c'est exactement ce qu'on aime.",
-        svg: '<use href="#p-bun-top" y="4"/><use href="#p-salad" y="54"/><use href="#p-cheese" y="66"/><use href="#p-chicken" y="76"/><use href="#p-bun-bot" y="94"/>' },
-      veggie: { name: "Le Green Garden", price: "11,50 €", vb: 120,
-        desc: "Frais, malin, plein de bonnes idées : tu prouves qu'on peut être green et sérieusement gourmand.",
-        svg: '<use href="#p-bun-top" y="4"/><use href="#p-salad" y="54"/><use href="#p-tomato" y="66"/><use href="#p-veggie" y="76"/><use href="#p-bun-bot" y="94"/>' },
-      triple: { name: "Le Triple Z", price: "16,90 €", vb: 148,
-        desc: "Trois étages, zéro compromis. Tu vois grand, tout le temps — et tu assumes jusqu'à la dernière bouchée.",
-        svg: '<use href="#p-bun-top"/><use href="#p-cheese" y="52"/><use href="#p-steak" y="60"/><use href="#p-cheese" y="76"/><use href="#p-steak" y="84"/><use href="#p-cheese" y="100"/><use href="#p-steak" y="108"/><use href="#p-bun-bot" y="126"/>' },
+        svg: '<rect x="52" y="40" width="27" height="88" rx="13.5" fill="#DFA045" transform="rotate(-14 65 84)"/><rect x="88" y="32" width="27" height="96" rx="13.5" fill="#EBB159"/><rect x="124" y="42" width="27" height="84" rx="13.5" fill="#DFA045" transform="rotate(12 137 84)"/><circle cx="158" cy="122" r="19" fill="#F6EFE3"/><circle cx="158" cy="122" r="13" fill="#E8DCC4"/>' },
+      veggie: { name: "La Salade fraîcheur", price: "bientôt à la carte", vb: 150,
+        desc: "Frais, léger, plein de bonnes idées : tu prouves qu'on peut être raisonnable et sérieusement gourmand à la fois.",
+        svg: '<use href="#p-salad" y="52"/><use href="#p-salad" y="64"/><circle cx="70" cy="70" r="8" fill="#E23B2E"/><circle cx="126" cy="64" r="7" fill="#E23B2E"/><path d="M28 78 L172 78 Q168 126 100 126 Q32 126 28 78 Z" fill="#F6EFE3"/><path d="M28 78 L172 78 L170 88 L30 88 Z" fill="#E3D8C4"/>' },
+      triple: { name: "Le BBQ Burger", price: "16,90 € en menu", vb: 132,
+        desc: "Bacon, sauce BBQ fumée, zéro compromis. Tu vois grand, tout le temps — et tu assumes jusqu'à la dernière bouchée.",
+        svg: '<use href="#p-bun-top"/><use href="#p-salad" y="50"/><use href="#p-tomato" y="62"/><use href="#p-cheese" y="70"/><use href="#p-bacon" y="80"/><use href="#p-steak" y="92"/><use href="#p-bun-bot" y="110"/>' },
     };
     const PRIORITY = ["signature", "triple", "chicken", "veggie", "classic"];
     let qIndex = 0;
