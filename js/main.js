@@ -8,13 +8,19 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── Preloader ── */
+  /* ── Intro : le burger s'assemble puis traverse l'écran ── */
   const preloader = document.getElementById("preloader");
+  const endIntro = () => {
+    preloader.classList.add("is-done");
+    document.body.classList.add("intro-done");
+  };
   window.addEventListener("load", () => {
-    setTimeout(() => preloader.classList.add("is-done"), reduceMotion ? 0 : 900);
+    if (reduceMotion) { endIntro(); return; }
+    preloader.classList.add("is-play");
+    setTimeout(endIntro, 1450);
   });
-  // Sécurité : ne jamais rester bloqué sur le loader
-  setTimeout(() => preloader.classList.add("is-done"), 3500);
+  // Sécurité : ne jamais rester bloqué sur l'intro
+  setTimeout(endIntro, 4500);
 
   /* ── Split du titre héro en caractères ── */
   document.querySelectorAll("[data-split]").forEach((el) => {

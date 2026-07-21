@@ -41,9 +41,51 @@ em { font-style: italic; color: var(--flame); }
   background: var(--noir);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 26px;
-  transition: opacity .6s var(--ease), visibility .6s;
+  overflow: hidden;
+  transition: transform .8s cubic-bezier(.75, 0, .2, 1), visibility 0s .85s;
 }
-.preloader.is-done { opacity: 0; visibility: hidden; }
+/* Bord arrondi qui suit le rideau quand il se lève */
+.preloader::after {
+  content: ""; position: absolute; top: 100%; left: -5%; right: -5%;
+  height: 12vh; background: var(--noir);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+.preloader.is-done { transform: translateY(-114%); visibility: hidden; }
+
+.preloader__stage { position: relative; }
+
+/* Le burger fonce à travers l'écran */
+.preloader.is-play .preloader__burger {
+  animation: intro-dash 1.15s cubic-bezier(.6, -0.28, .8, .6) .25s forwards;
+}
+@keyframes intro-dash {
+  0%   { transform: none; }
+  28%  { transform: translateX(-26px) rotate(-8deg) scaleX(.92); }
+  100% { transform: translateX(120vw) rotate(26deg); }
+}
+
+/* Lignes de vitesse dans son sillage */
+.preloader__lines span {
+  position: absolute; left: -150px;
+  width: 95px; height: 3px; border-radius: 3px;
+  background: rgba(255, 140, 60, .55);
+  opacity: 0;
+}
+.preloader__lines span:nth-child(1) { top: 14%; }
+.preloader__lines span:nth-child(2) { top: 50%; width: 130px; left: -190px; }
+.preloader__lines span:nth-child(3) { top: 84%; }
+.preloader.is-play .preloader__lines span { animation: line-dash .55s ease-out forwards; }
+.preloader.is-play .preloader__lines span:nth-child(1) { animation-delay: .62s; }
+.preloader.is-play .preloader__lines span:nth-child(2) { animation-delay: .7s; }
+.preloader.is-play .preloader__lines span:nth-child(3) { animation-delay: .78s; }
+@keyframes line-dash {
+  0%   { opacity: 0; transform: none; }
+  25%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(135vw); }
+}
+
+.preloader.is-play .preloader__text { animation: text-out .45s ease .55s forwards; }
+@keyframes text-out { to { opacity: 0; transform: translateY(16px); } }
 
 .preloader__burger { display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .pl-layer { display: block; border-radius: 99px; animation: pl-drop .55s var(--ease) both; }
@@ -197,8 +239,11 @@ em { font-style: italic; color: var(--flame); }
 .hero__word .char {
   display: inline-block;
   animation: char-up .9s var(--ease) both;
-  animation-delay: calc(var(--i) * 60ms + .2s);
+  animation-delay: calc(var(--i) * 60ms + .15s);
+  animation-play-state: paused;
 }
+/* Le titre ne s'anime qu'une fois le rideau d'intro levé */
+body.intro-done .hero__word .char { animation-play-state: running; }
 @keyframes char-up {
   from { opacity: 0; transform: translateY(.6em) rotate(6deg); }
   to   { opacity: 1; transform: none; }
