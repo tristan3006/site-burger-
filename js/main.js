@@ -281,7 +281,7 @@
     document.querySelectorAll(".ing").forEach((btn) => {
       btn.addEventListener("click", () => {
         if (stack.length >= MAX_LAYERS) {
-          msgEl.textContent = "Même le Triple Z n'ose pas monter aussi haut 😅";
+          msgEl.textContent = "Même le BBQ burger n'ose pas monter aussi haut 😅";
           return;
         }
         msgEl.textContent = "";
